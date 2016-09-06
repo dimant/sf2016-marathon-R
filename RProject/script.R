@@ -97,6 +97,13 @@ states <- unlist(lapply(marathon$location, getState))
 # skewness(allTimes)
 # kurtosis(allTimes)
 
+# normal distribution
+# plot(dnorm, ylab = "p", from = -3, to = 3)
+
+# barplot(table(genders))
+# hist(allTimes, main="", xlab = "Time")
+# boxplot(allTimes, ylab="Time")
+
 # tabular representation
 # table(states)
 # table(genders,ageBuckets)
