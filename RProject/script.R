@@ -101,7 +101,13 @@ states <- unlist(lapply(marathon$location, getState))
 # plot(dnorm, ylab = "p", from = -3, to = 3)
 
 # barplot(table(genders))
-# hist(allTimes, main="", xlab = "Time")
+
+#par(mfrow = c(2, 2))
+#hist(allTimes, main = "5 bins", xlab = "Time", breaks = 5)
+#hist(allTimes, main = "10 bins", xlab = "Time", breaks = 10)
+#hist(allTimes, main = "100 bins", xlab = "Time", breaks = 100)
+#par(mfrow = c(1, 1))
+
 # boxplot(allTimes, ylab="Time")
 
 # tabular representation
@@ -141,11 +147,16 @@ states <- unlist(lapply(marathon$location, getState))
 # chisq.test(as.table(rbind(ageGroupsUSAAbs, ageGroupsMarathonAbs)))
 # barplot(ageGroupsMarathonRel - ageGroupsUSARel)
 
+# the red herring
 # letter frequency correlated with finishing time
 # seems like a red herring especially because if we adjust for age, the correlation is reversed
-# barplot(sort(letterTime, decreasing =TRUE))
-# plot(nameLetterFreqs[,1] ~ allQuantiles)
+#par(mfrow=c(2,1))
+#barplot(sort(letterTime, decreasing = TRUE), ylab = "% of variance explained", main="% variance of time explained by letter.")
+#barplot(sapply(split(nameLetterFreqs[, 1], allQuantiles), median), xlab = "bins", names = 1:10, ylab = "median frequency of letter a", main = "Frequency of letter a by time.")
+#par(mfrow = c(1, 1))
 
-# barplot(sort(letterAgeGrade, decreasing =TRUE))
-# plot(nameLetterFreqs[,1] ~ allAgeGradeQt)
+#par(mfrow = c(2, 1))
+#barplot(sort(letterAgeGrade, decreasing = TRUE), ylab = "% of variance explained", main = "% variance of age grade explained by letter.")
+#barplot(sapply(split(nameLetterFreqs[, 1], allAgeGradeQt), median), xlab = "bins", names = 1:10, ylab = "median frequency of letter a", main = "Frequency of letter a by age grade.")
+#par(mfrow = c(1, 1))
 
