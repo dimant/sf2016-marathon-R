@@ -18,11 +18,15 @@ marathon$bib <- as.numeric(marathon$bib)
 
 secPerDay = 24 * 60 * 60
 
+paces <- as.vector(times(unlist(sapply(marathon$pace, function(x) { paste("00:", x, sep = ""); }))) * secPerDay)
+
 # all finishing times in seconds
 allTimes <- as.numeric(times(marathon$net_time)) * secPerDay
 allQuantiles <- cut2(allTimes, g = 10)
 allAgeGrades <- unlist(lapply(marathon$age_grade, function(x) { as.numeric(substring(x, 0, nchar(x) - 1)) }))
 allAgeGradeQt <- cut2(allAgeGrades, g = 10)
+
+
 
 genders <- unlist(lapply(marathon$sex_age, substring, 1, 1))
 
