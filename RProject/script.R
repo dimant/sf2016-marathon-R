@@ -70,7 +70,8 @@ letterTime <- predictWithLetters(nameLetterFreqs, allQuantiles)
 
 letterAgeGrade <- predictWithLetters(nameLetterFreqs, allAgeGradeQt)
 
-ages <- as.integer(unlist(lapply(marathon$sex_age, getState)))
+allAges <- as.integer(unlist(lapply(marathon$sex_age, getState)))
+ages <- ages[!is.na(allAges)]
 
 ageGroupsUSA <- read.table(file = "2015-age-group-estimate.txt")
 row.names(ageGroupsUSA) <- ageGroupsUSA[, 1]
@@ -94,6 +95,8 @@ ageSexEstimates[2,] <- ageSexEstimates[2,] / sum(ageSexEstimates[2,])
 
 states <- unlist(lapply(marathon$location, getState))
 
+
+
 # mean, median
 # summary(allTimes)
 # standard deviation
@@ -103,16 +106,22 @@ states <- unlist(lapply(marathon$location, getState))
 
 # normal distribution
 # plot(dnorm, ylab = "p", from = -3, to = 3)
+# curve(dnorm(x, mean(ages), sd(ages)), from=0, to=80, ylab="P(age)", xlab="age")
 
-# barplot(table(genders))
+# barplot(table(genders), ylab="Frequency", xlab="Gender")
+
+#hist(ages, main = "10 bins", xlab = "Age", breaks = 10)
 
 #par(mfrow = c(2, 2))
-#hist(allTimes, main = "5 bins", xlab = "Time", breaks = 5)
-#hist(allTimes, main = "10 bins", xlab = "Time", breaks = 10)
-#hist(allTimes, main = "100 bins", xlab = "Time", breaks = 100)
+#hist(ages, main = "5 bins", xlab = "Age", breaks = 5)
+#hist(ages, main = "10 bins", xlab = "Age", breaks = 10)
+#hist(ages, main = "100 bins", xlab = "Age", breaks = 100)
 #par(mfrow = c(1, 1))
 
 # boxplot(allTimes, ylab="Time")
+
+# plot(allAges ~ allTimes, xlab="Finishing Time in Seconds", ylab="Age")
+# plot(paces ~ allTimes, xlab="Finishing Time in Seconds", ylab="Average Time per Mile in Seconds (Pace)")
 
 # tabular representation
 # table(states)
@@ -128,6 +137,32 @@ states <- unlist(lapply(marathon$location, getState))
 # boxplot(allAgeGrades ~ genders, notch=TRUE)
 # this outlier probably didn 't provide his age
 # marathon[2125,]
+
+
+# synthetic data
+simulateNormal <- function(d) {
+    rnorm(length(d), mean(d), sd(d))
+}
+normalGenders <- c(rep('M', sum(genders == 'M')), rep('F', sum(genders == 'F')))
+normalTimes <- c(simulateNormal(allTimes[genders == 'M']), simulateNormal(allTimes[genders == 'F']))
+
+# kolmogoroff smirnov test
+# continuous distributions
+ks.test(
+    normalTimes[normalGenders == 'M'], 
+    pnorm, 
+    mean(normalTimes[normalGenders == 'M']), 
+    sd(normalTimes[normalGenders == 'M']))
+
+# two semple welch student's t test
+t.test(
+    normalTimes[normalGenders == 'M'], 
+    normalTimes[normalGenders == 'F'])
+
+# f-test
+var.test(
+    normalTimes[normalGenders == 'M'], 
+    normalTimes[normalGenders == 'F'])
 
 # gender ratios compared with CIA factbook estimate for USA in 2015
 # https://www.cia.gov/library/publications/the-world-factbook/fields/2018.html
