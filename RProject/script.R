@@ -71,7 +71,7 @@ letterTime <- predictWithLetters(nameLetterFreqs, allQuantiles)
 letterAgeGrade <- predictWithLetters(nameLetterFreqs, allAgeGradeQt)
 
 allAges <- as.integer(unlist(lapply(marathon$sex_age, getState)))
-ages <- ages[!is.na(allAges)]
+ages <- allAges[!is.na(allAges)]
 
 ageGroupsUSA <- read.table(file = "2015-age-group-estimate.txt")
 row.names(ageGroupsUSA) <- ageGroupsUSA[, 1]
