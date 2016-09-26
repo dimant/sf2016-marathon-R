@@ -138,6 +138,30 @@ states <- unlist(lapply(marathon$location, getState))
 # this outlier probably didn 't provide his age
 # marathon[2125,]
 
+# explaining probability
+
+# curve(dnorm(x, mean(ages), sd(ages)), from=0, to=80, ylab="P(age)", xlab="age")
+
+shadeCoords <- function(pFrom, pTo, m, s) {
+    from <- qnorm(pFrom, m, s)
+    to <- qnorm(pTo, m, s)
+    values <- seq(from, to, 0.01)
+    x <- c(values[1], values, values[length(values)])
+    y <- c(0, dnorm(values, m, s), 0)
+    list(
+        "x" = x,
+        "y" = y 
+        );
+}
+
+doubleSidedCurve <- function(alpha, m, s) {
+    from <- qnorm(0.001, m, s)
+    to <- qnorm(1 - 0.001, m, s)
+    curve(dnorm(x, m, s), xlim = c(from, to), main = 'Standard Normal')
+    polygon(shadeCoords(0.0009999, alpha / 2, m, s), col = "lightgrey")
+    polygon(shadeCoords(1 - alpha / 2, 1 - 0.0009999, m, s), col = "lightgrey")
+}
+
 
 # synthetic data
 simulateNormal <- function(d) {
