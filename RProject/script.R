@@ -162,6 +162,10 @@ doubleSidedCurve <- function(alpha, m, s) {
     polygon(shadeCoords(1 - alpha / 2, 1 - 0.0009999, m, s), col = "lightgrey")
 }
 
+#rnorm(
+    #length(allTimes[genders == 'M']), 
+    #mean(allTimes[genders == 'M']), 
+    #sd(allTimes[genders == 'M']))
 
 # synthetic data
 simulateNormal <- function(d) {
@@ -172,6 +176,14 @@ normalTimes <- c(simulateNormal(allTimes[genders == 'M']), simulateNormal(allTim
 
 # kolmogoroff smirnov test
 # continuous distributions
+
+ks.test(allTimes[genders == 'M'], allTimes[genders == 'F'])
+
+ks.test(allTimes[genders == 'M'], 
+    pnorm, 
+    mean(allTimes[genders == 'M']), 
+    sd(allTimes[genders == 'M']))
+
 ks.test(
     normalTimes[normalGenders == 'M'], 
     pnorm, 
