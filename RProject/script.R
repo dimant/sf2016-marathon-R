@@ -85,6 +85,8 @@ ageGroupsMarathonRel <- ageGroupsMarathonAbs / sum(ageGroupsMarathonAbs)
 ageBuckets <- arules::discretize(ages, categories = 4)
 
 ageSexEstimateUSA <- read.table(file = "2015-age-sex-estimate.txt", header = TRUE)
+ageSexEstimateUSA[,3] <- ageSexEstimateUSA[,1] - ageSexEstimateUSA[,2]
+colnames(ageSexEstimateUSA)[3] <- "F"
 ageSexEstimateMarathon <- cut(ages, breaks = c(0, 14, 24, 54, 64, 150))
 ageSexEstimateMarathon <- table(ageSexEstimateMarathon[genders == "M"])
 
@@ -207,20 +209,18 @@ var.test(
 # barplot(table(genders))
 
 # age versus gender
-# boxplot(ages ~ genders, notch = TRUE)
+# boxplot(allAges ~ genders, notch = TRUE)
 
+# barplot(as.matrix(prop.table(ageSexEstimates) * 100), beside = TRUE, legend = c("USA", "Marathon"), args.legend = list(cex = 0.75, bty = "n"), ylab = "%", xlab = "Age Group")
 # gender ratios broken down by age group and compared with CIA factbook
-# chisq.test(rbind(t(as.vector(ageSexEstimateUSA[2])), as.vector(ageSexEstimateMarathon)))
+#comparisonAgeGroups <- rbind(t(as.vector(ageSexEstimateUSA[2])), as.vector(ageSexEstimateMarathon))
+#chisq.test(comparisonAgeGroups)
 # barplot(ageSexEstimates[2,] - ageSexEstimates[1,])
 
 # performance by age - unless we bucket the data no pattern is apparent
 # boxplot(ages ~ allQuantiles, notch=TRUE)
 # boxplot(ages ~ allAgeGradeQt, notch = TRUE)
 # plot(ageBuckets ~ allQuantiles)
-
-# age group sizes relative to census buerau expectation for USA in 2015
-# chisq.test(as.table(rbind(ageGroupsUSAAbs, ageGroupsMarathonAbs)))
-# barplot(ageGroupsMarathonRel - ageGroupsUSARel)
 
 # the red herring
 # letter frequency correlated with finishing time
