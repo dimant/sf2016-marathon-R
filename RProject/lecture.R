@@ -129,3 +129,29 @@ skewness(ages)
 
 # 8) kurtosis
 kurtosis(ages)
+
+###############################################################
+# Presenting Data
+
+# 9) table genders
+table(genders)
+
+# 10) ratio genders
+4171 / 2163
+
+# 11) barplot genders
+barplot(table(genders))
+
+# 12) time spent working - bureau of labor statistics
+# https://goo.gl/25XzTn
+
+# easter egg
+# https://goo.gl/lJ463D
+
+# 13) histogram ages
+hist(ages, 10)
+
+# 14) histogram ages bin size
+hist(ages, 5)
+hist(ages, 100)
+
